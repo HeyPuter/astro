@@ -1,0 +1,452 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Puter.js Examples · Astro</title>
+    <style>
+      :root {
+        --background: #ffffff;
+        --foreground: #171717;
+        --panel-bg: rgba(255, 255, 255, 0.04);
+        --panel-border: rgba(255, 255, 255, 0.12);
+        --callout-bg: rgba(100, 108, 255, 0.08);
+        --callout-border: rgba(100, 108, 255, 0.35);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #0a0a0a;
+          --foreground: #ededed;
+        }
+      }
+
+      body {
+        background: var(--background);
+        color: var(--foreground);
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      a {
+        font-weight: 600;
+        color: #646cff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #535bf2;
+      }
+
+      button {
+        border-radius: 8px;
+        border: 1px solid transparent;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 600;
+        font-family: inherit;
+        background-color: #1a1a1a;
+        color: #f9f9f9;
+        cursor: pointer;
+        transition: border-color 0.25s, transform 0.05s ease;
+      }
+
+      button:hover {
+        border-color: #646cff;
+        transform: translateY(-1px);
+      }
+
+      button:focus,
+      button:focus-visible {
+        outline: 4px auto -webkit-focus-ring-color;
+      }
+
+      #app {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+      }
+
+      .page-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        text-align: center;
+      }
+
+      .logo {
+        height: 5em;
+        padding: 1em;
+      }
+
+      .logo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .hero-subtitle {
+        margin: 0;
+        color: #9ca3af;
+      }
+
+      .tab-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .tab {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        border: 1px solid var(--panel-border);
+        background: var(--panel-bg);
+        border-radius: 12px;
+        padding: 0.85rem 1rem;
+        text-align: left;
+        color: inherit;
+        cursor: pointer;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+      }
+
+      .tab:hover {
+        border-color: #646cff;
+        transform: translateY(-1px);
+      }
+
+      .tab.active {
+        border-color: #646cff;
+        box-shadow: 0 0 0 1px #646cff55;
+      }
+
+      .tab-title {
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.2;
+        display: flex;
+        gap: 0.35rem;
+        align-items: center;
+      }
+
+      .tab-desc {
+        font-size: 0.9rem;
+        color: #9ca3af;
+        line-height: 1.35;
+      }
+
+      .tab-panel {
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 14px;
+        padding: 1.25rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .card {
+        padding: 1.25rem;
+        border-radius: 12px;
+        background: transparent;
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        align-items: flex-start;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .counter-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .counter-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        min-width: 70px;
+        text-align: center;
+      }
+
+      .status {
+        margin: 0;
+        color: #9ca3af;
+      }
+
+      .callout {
+        width: 100%;
+        background: var(--callout-bg);
+        border: 1px solid var(--callout-border);
+        border-radius: 10px;
+        padding: 0.75rem 0.9rem;
+      }
+
+      .callout pre {
+        margin: 0.35rem 0 0;
+        font-size: 0.9rem;
+        overflow-x: auto;
+      }
+
+      .callout p {
+        margin: 0.25rem 0 0;
+      }
+
+      pre {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 0.5rem 0.65rem;
+        border-radius: 8px;
+        margin: 0;
+        color: inherit;
+      }
+
+      .chat-box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .chat-box textarea {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid var(--panel-border);
+        background: rgba(255, 255, 255, 0.03);
+        color: inherit;
+        padding: 0.75rem;
+        font-size: 1rem;
+        resize: vertical;
+      }
+
+      .chat-history {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+      }
+
+      .chat-turn {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 0.25rem 0.75rem;
+        align-items: start;
+      }
+
+      .chat-label {
+        font-weight: 600;
+        color: #9ca3af;
+      }
+
+      .chat-bubble {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--panel-border);
+        border-radius: 10px;
+        padding: 0.65rem 0.75rem;
+        line-height: 1.4;
+      }
+
+      .chat-bubble.alt {
+        background: var(--callout-bg);
+        border-color: var(--callout-border);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --panel-bg: #f7f9ff;
+          --panel-border: #e2e8f0;
+          --callout-bg: #eef2ff;
+          --callout-border: #c7d2fe;
+        }
+
+        button {
+          background-color: #f9f9f9;
+          color: #111827;
+        }
+
+        .hero-subtitle,
+        .tab-desc,
+        .status {
+          color: #4b5563;
+        }
+
+        pre {
+          background: #e5e7eb;
+        }
+
+        .tab-panel {
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="page-wrap">
+        <header class="hero">
+          <div class="logo-row">
+            <a href="https://puter.com" target="_blank" rel="noreferrer">
+              <img src="https://puter.com/images/logo.png" class="logo" alt="Puter logo" />
+            </a>
+          </div>
+          <h1>Puter.js Examples</h1>
+          <p class="hero-subtitle">Quick, runnable snippets for the most common Puter.js APIs.</p>
+        </header>
+
+        <nav class="tab-list" aria-label="Puter.js example tabs">
+          <button class="tab active" type="button" data-tab="kv">
+            <span class="tab-title">KV store</span>
+            <span class="tab-desc">Get/set and increment counters</span>
+          </button>
+          <button class="tab" type="button" data-tab="fs">
+            <span class="tab-title">File system</span>
+            <span class="tab-desc">Read and write a demo file</span>
+          </button>
+          <button class="tab" type="button" data-tab="os">
+            <span class="tab-title">OS</span>
+            <span class="tab-desc">User profile + version info</span>
+          </button>
+          <button class="tab" type="button" data-tab="ai">
+            <span class="tab-title">AI chat</span>
+            <span class="tab-desc">Prompt Puter AI and see replies</span>
+          </button>
+          <button class="tab" type="button" data-tab="ui">
+            <span class="tab-title">UI helpers</span>
+            <span class="tab-desc">File picker example</span>
+          </button>
+        </nav>
+
+        <main class="tab-panel">
+          <section class="card stack tab-content" data-content="kv">
+            <div class="stack">
+              <h2>Puter KV Store</h2>
+              <a href="https://docs.puter.com/KV/" target="_blank" rel="noreferrer">KV documentation</a>
+            </div>
+            <div class="counter-row">
+              <button data-kv-action="decr" disabled>-</button>
+              <span class="counter-value" data-kv-value>loading...</span>
+              <button data-kv-action="incr" disabled>+</button>
+            </div>
+            <p class="status">
+              This counter is stored in Puter KV as <code>testCounter</code>.
+            </p>
+          </section>
+
+          <section class="card stack tab-content" data-content="fs" hidden>
+            <div class="stack">
+              <h2>Puter File System</h2>
+              <p>
+                Creates and reads a sample file at <code data-demo-path></code>. Uses your app data folder when
+                available.
+              </p>
+            </div>
+
+            <div class="actions">
+              <button data-fs-action="write">Write file</button>
+              <button data-fs-action="read">Read file</button>
+            </div>
+
+            <p class="status" data-fs-status>Status: Idle</p>
+
+            <div class="callout" data-fs-callout hidden>
+              <strong>File contents</strong>
+              <pre data-fs-contents></pre>
+            </div>
+          </section>
+
+          <section class="card stack tab-content" data-content="os" hidden>
+            <div class="stack">
+              <h2>Puter OS</h2>
+              <p>Fetches the current user and OS version metadata from Puter.</p>
+            </div>
+
+            <div class="actions">
+              <button data-os-action="user">Get current user</button>
+              <button data-os-action="version">Get OS version</button>
+            </div>
+
+            <p class="status" data-os-status>Status: Idle</p>
+
+            <div class="callout" data-os-user hidden>
+              <strong>User info</strong>
+              <pre data-os-user-pre></pre>
+            </div>
+
+            <div class="callout" data-os-version hidden>
+              <strong>Version info</strong>
+              <pre data-os-version-pre></pre>
+            </div>
+          </section>
+
+          <section class="card stack tab-content" data-content="ai" hidden>
+            <div class="stack">
+              <h2>Puter AI Chat</h2>
+              <p>
+                Send a short prompt to <code>puter.ai.chat</code> and see the reply.
+              </p>
+            </div>
+
+            <div class="chat-box">
+              <textarea rows="3" placeholder="Ask Puter AI anything..." data-ai-input></textarea>
+              <div class="actions">
+                <button data-ai-send>Send message</button>
+                <span class="status" data-ai-status>Status: Idle</span>
+              </div>
+            </div>
+
+            <div class="callout" data-ai-history hidden>
+              <strong>Conversation</strong>
+              <div class="chat-history" data-ai-history-list></div>
+            </div>
+          </section>
+
+          <section class="card stack tab-content" data-content="ui" hidden>
+            <div class="stack">
+              <h2>Puter UI</h2>
+              <p>
+                Single-file picker example using <code>puter.ui.showOpenFilePicker</code>.
+              </p>
+            </div>
+
+            <div class="actions">
+              <button data-ui-open>Open file picker</button>
+            </div>
+
+            <div class="callout">
+              <strong>Last UI result</strong>
+              <p data-ui-result>No UI actions yet</p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" is:inline>
+      import './puter-examples.ts';
+    </script>
+  </body>
+</html>
